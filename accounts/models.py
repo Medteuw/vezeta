@@ -10,6 +10,12 @@ class Profile(models.Model):
     price = models.IntegerField(blank=True,null=True)
     image = models.ImageField('Se photo',upload_to='profils',blank=True,null=True)
     slug = models.SlugField("slug", blank=True,null=True)
+    Specialist_doctor = models.CharField("Specialite",max_length=100 , blank=True, null=True)
+    Address = models.CharField("Votre adresse",max_length=100,blank=True, null=True)
+    number_phone = models.CharField("Votre numeros de telephone",max_length=50,blank=True, null=True)
+    working_hours = models.IntegerField("Heur de travail", blank=True, null=True)
+    subtitle = models.CharField(max_length=80,blank=True,null=True)
+
 
     def save(self, *args,**kwargs):
         if not self.slug:
