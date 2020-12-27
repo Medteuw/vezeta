@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from .models import Profile
-from .forms import LoginForm
+from .forms import LoginForm, UserCreationForms
 from django.contrib.auth import authenticate, login
 
 
@@ -31,5 +31,24 @@ def login_user(request):
 
     
     return render(request,'accounts/login.html',{
+        'form' : form
+    })
+
+def signUp(request):
+    
+    if request.method=='POST':
+        form = UserCreationForms(request.POST)
+        if form.is_valid:
+            form.save()
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username = username,password = password)
+            login(request,user)
+            return redirect('accounts:doctors_list')
+
+    else:
+        form = UserCreationForms()
+
+    return render(request,'accounts/signup.html',{
         'form' : form
     })
